@@ -1,0 +1,38 @@
+{
+	"name" : "coka/cors-bundle",
+	"type" : "symfony-bundle",
+	"description" : "Allows multi origin HTTP requests (CORS) supports",
+	"keywords" : [
+		"CORS"
+	],
+	"autoload" : {
+		"psr-4" : {
+			"Oka\\CORS\\" : "src"
+		},
+		"exclude-from-classmap" : [
+			"/tests/"
+		]
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"Oka\\CORS\\Tests\\" : "tests/"
+		}
+	},
+	"require" : {
+		"php" : ">=7.2",
+		"symfony/dependency-injection" : "^3.4 || ^4.0",
+		"symfony/config" : "^3.4 || ^4.0",
+		"symfony/http-kernel" : "^3.4 || ^4.0"
+	},
+	"extra" : {
+		"branch-alias" : {
+			"dev-master" : "1.x.x-dev"
+		},
+		"symfony" : {
+			"allow-contrib" : "true"
+		}
+	},
+	"support" : {
+		"docs" : "https://github.com/CedrickOka/cors-bundle/blob/master/src/Resources/doc/index.md"
+	}
+}
