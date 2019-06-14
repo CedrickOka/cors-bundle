@@ -1,7 +1,7 @@
-OkaApiBundle
-============
+OkaCORSBundle
+=============
 
-This bundle provides a set of components for the design of a REST API.
+This bundle allows multi origin HTTP requests (CORS) supports.
 
 [![Latest Stable Version](https://poser.pugx.org/coka/cors-bundle/v/stable)](https://packagist.org/packages/coka/cors-bundle)
 [![Total Downloads](https://poser.pugx.org/coka/cors-bundle/downloads)](https://packagist.org/packages/coka/cors-bundle)
