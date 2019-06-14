@@ -1,9 +1,15 @@
 {
 	"name" : "coka/cors-bundle",
 	"type" : "symfony-bundle",
+	"license" : "MIT",
 	"description" : "Allows multi origin HTTP requests (CORS) supports",
 	"keywords" : [
 		"CORS"
+	],
+	"authors" : [{
+			"name" : "Cedrick Oka Baidai",
+			"email" : "okacedrick@gmail.com"
+		}
 	],
 	"autoload" : {
 		"psr-4" : {
