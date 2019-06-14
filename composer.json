@@ -13,7 +13,7 @@
 	],
 	"autoload" : {
 		"psr-4" : {
-			"Oka\\CORS\\" : "src"
+			"Oka\\CORSBundle\\" : "src"
 		},
 		"exclude-from-classmap" : [
 			"/tests/"
@@ -21,7 +21,7 @@
 	},
 	"autoload-dev" : {
 		"psr-4" : {
-			"Oka\\CORS\\Tests\\" : "tests/"
+			"Oka\\CORSBundle\\Tests\\" : "tests/"
 		}
 	},
 	"require" : {
