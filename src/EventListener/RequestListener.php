@@ -2,8 +2,10 @@
 namespace Oka\CORSBundle\EventListener;
 
 use Oka\CORSBundle\CorsOptions;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -13,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  * @author Cedrick Oka Baidai <okacedrick@gmail.com>
  * 
  */
-class RequestListener
+class RequestListener implements EventSubscriberInterface
 {
 	/**
 	 * @var array $maps
@@ -67,6 +69,14 @@ class RequestListener
 				}
 			}
 		}
+	}
+	
+	public static function getSubscribedEvents()
+	{
+		return [
+				KernelEvents::RESPONSE => 'onKernelResponse',
+				KernelEvents::EXCEPTION => ['onKernelException', 2048]
+		];
 	}
 	
 	/**

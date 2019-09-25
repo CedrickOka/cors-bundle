@@ -9,7 +9,7 @@ This bundle allows multi origin HTTP requests (CORS) supports.
 [![License](https://poser.pugx.org/coka/cors-bundle/license)](https://packagist.org/packages/coka/cors-bundle)
 [![Monthly Downloads](https://poser.pugx.org/coka/cors-bundle/d/monthly)](https://packagist.org/packages/coka/cors-bundle)
 [![Daily Downloads](https://poser.pugx.org/coka/cors-bundle/d/daily)](https://packagist.org/packages/coka/cors-bundle)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/decc08f3-aa4b-4c7b-8377-c61a4b2f961c/mini.png)](https://insight.sensiolabs.com/projects/decc08f3-aa4b-4c7b-8377-c61a4b2f961c)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5ee85078-5d8d-4f65-9ed9-cbcc6ef2358f/mini.png)](https://insight.sensiolabs.com/projects/5ee85078-5d8d-4f65-9ed9-cbcc6ef2358f)
 
 Latest updates
 --------------

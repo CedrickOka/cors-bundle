@@ -1,6 +1,10 @@
 Changelog
 =========
 
+#### 1.1.0 (2019-06-25)
+
+* Replaced listener by subscriber.
+
 #### 1.0.1 (2019-06-14)
 
 * Fix class autoload failed.
