@@ -1,10 +1,9 @@
 <?php
+
 namespace Oka\CORSBundle;
 
 /**
- * 
  * @author Cedrick Oka Baidai <okacedrick@gmail.com>
- * 
  */
 final class CorsOptions
 {

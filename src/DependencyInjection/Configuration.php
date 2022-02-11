@@ -18,46 +18,41 @@ class Configuration implements ConfigurationInterface
 	public function getConfigTreeBuilder()
 	{
 		$treeBuilder = new TreeBuilder('oka_cors');
-		
-		if (true === method_exists($treeBuilder, 'getRootNode')) {
-			$rootNode = $treeBuilder->getRootNode();
-		} else {
-			// BC layer for symfony/config 4.1 and older
-			$rootNode = $treeBuilder->root('oka_cors');
-		}
+	    /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
+	    $rootNode = $treeBuilder->getRootNode();
 		
 		$rootNode
-				->requiresAtLeastOneElement()
-				->useAttributeAsKey('name')
-				->prototype('array')
-					->children()
-						->scalarNode(CorsOptions::PATTERN)->defaultNull()->end()
-						
-						->arrayNode(CorsOptions::ORIGINS)
-							->performNoDeepMerging()
-							->prototype('scalar')->end()
-						->end()
-						
-						->arrayNode(CorsOptions::ALLOW_METHODS)
-							->performNoDeepMerging()
-							->prototype('scalar')->end()
-						->end()
-						
-						->arrayNode(CorsOptions::ALLOW_HEADERS)
-							->performNoDeepMerging()
-							->prototype('scalar')->end()
-						->end()
-						
-						->booleanNode(CorsOptions::ALLOW_CREDENTIALS)->defaultFalse()->end()
-						
-						->arrayNode(CorsOptions::EXPOSE_HEADERS)
-							->performNoDeepMerging()
-							->prototype('scalar')->end()
-						->end()
-						
-						->integerNode(CorsOptions::MAX_AGE)->defaultValue(3600)->end()
+			->requiresAtLeastOneElement()
+			->useAttributeAsKey('name')
+			->prototype('array')
+				->children()
+					->scalarNode(CorsOptions::PATTERN)->defaultNull()->end()
+					
+					->arrayNode(CorsOptions::ORIGINS)
+						->performNoDeepMerging()
+						->prototype('scalar')->end()
 					->end()
-				->end();
+					
+					->arrayNode(CorsOptions::ALLOW_METHODS)
+						->performNoDeepMerging()
+						->prototype('scalar')->end()
+					->end()
+					
+					->arrayNode(CorsOptions::ALLOW_HEADERS)
+						->performNoDeepMerging()
+						->prototype('scalar')->end()
+					->end()
+					
+					->booleanNode(CorsOptions::ALLOW_CREDENTIALS)->defaultFalse()->end()
+					
+					->arrayNode(CorsOptions::EXPOSE_HEADERS)
+						->performNoDeepMerging()
+						->prototype('scalar')->end()
+					->end()
+					
+					->integerNode(CorsOptions::MAX_AGE)->defaultValue(3600)->end()
+				->end()
+			->end();
 		
 		return $treeBuilder;
 	}

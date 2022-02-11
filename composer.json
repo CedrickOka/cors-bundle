@@ -1,8 +1,9 @@
 {
 	"name" : "coka/cors-bundle",
 	"type" : "symfony-bundle",
-	"license" : "MIT",
 	"description" : "Allows multi origin HTTP requests (CORS) supports",
+	"homepage" : "https://github.com/CedrickOka/cors-bundle",
+	"license" : "MIT",
 	"keywords" : [
 		"CORS"
 	],
@@ -26,9 +27,13 @@
 	},
 	"require" : {
 		"php" : ">=7.2",
-		"symfony/dependency-injection" : "^3.4 || ^4.4",
-		"symfony/config" : "^3.4 || ^4.4",
-		"symfony/http-kernel" : "^3.4 || ^4.4"
+		"symfony/config" : "^4.4 || ^5.4",
+		"symfony/dependency-injection" : "^4.4 || ^5.4",
+		"symfony/event-dispatcher" : "^4.4 || ^5.4",
+		"symfony/http-kernel" : "^4.4 || ^5.4"
+	},
+	"config" : {
+		"sort-packages" : true
 	},
 	"extra" : {
 		"branch-alias" : {
@@ -39,6 +44,6 @@
 		}
 	},
 	"support" : {
-		"docs" : "https://github.com/CedrickOka/cors-bundle/blob/master/src/Resources/doc/index.md"
+		"docs" : "https://github.com/CedrickOka/cors-bundle/blob/master/docs/index.md"
 	}
 }

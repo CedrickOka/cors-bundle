@@ -1,5 +1,4 @@
 services:
-# Listener
     oka_cors.request.event_listener:
         class: Oka\CORSBundle\EventListener\RequestListener
         arguments: [[]]

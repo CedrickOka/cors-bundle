@@ -4,66 +4,49 @@ namespace Oka\CORSBundle\EventListener;
 use Oka\CORSBundle\CorsOptions;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestMatcher;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
- * 
  * @author Cedrick Oka Baidai <okacedrick@gmail.com>
- * 
  */
 class RequestListener implements EventSubscriberInterface
 {
-	/**
-	 * @var array $maps
-	 */
-	protected $maps;
+	private $maps;
 	
 	public function __construct(array $maps = [])
 	{
 		$this->maps = $maps;
 	}
 	
-	/**
-	 * @param FilterResponseEvent $event
-	 */
-	public function onKernelResponse(FilterResponseEvent $event)
+	public function onKernelResponse(ResponseEvent $event)
 	{
-		$request = $event->getRequest();
+	    $request = $event->getRequest();
 		
-		if (false === $request->isMethod('OPTIONS') && true === $request->headers->has('Origin')) {
+	    if (false === $request->isMethod('OPTIONS') && true === $request->headers->has('Origin')) {
 			foreach ($this->maps as $map) {
-				if (true === $this->match($request, $map[CorsOptions::ORIGINS], $map[CorsOptions::PATTERN])) {
-					$this->apply($request, $event->getResponse(), $map);
+				if (true === $this->match($request, $map[CorsOptions::ORIGINS], $map[CorsOptions::PATTERN] ?? null)) {
+				    $this->apply($request, $event->getResponse(), $map);
 					break;
 				}
 			}
 		}
 	}
 	
-	/**
-	 * @param GetResponseForExceptionEvent $event
-	 */
-	public function onKernelException(GetResponseForExceptionEvent $event)
+	public function onKernelException(ExceptionEvent $event)
 	{
 		$request = $event->getRequest();
-		$exception = $event->getException();
+		$exception = $event->getThrowable();
 		
 		if ($exception instanceof MethodNotAllowedHttpException && true === $request->isMethod('OPTIONS') && true === $request->headers->has('Origin')) {			
 			foreach ($this->maps as $map) {
 				if (true === $this->match($request, $map[CorsOptions::ORIGINS], $map[CorsOptions::PATTERN])) {
 					$response = $this->apply($request, new Response(), $map);
-					
-					if (-1 === version_compare(\Symfony\Component\HttpKernel\Kernel::VERSION, '3.3')) {
-						// Overwrite exception status code
-						$response->headers->set('X-Status-Code', 200);
-					} else {
-						$event->allowCustomResponseCode();
-					}
-					
+					$event->allowCustomResponseCode();
 					$event->setResponse($response);
 					break;
 				}
@@ -74,37 +57,25 @@ class RequestListener implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return [
-				KernelEvents::RESPONSE => 'onKernelResponse',
-				KernelEvents::EXCEPTION => ['onKernelException', 2048]
+		    KernelEvents::RESPONSE => 'onKernelResponse',
+		    KernelEvents::EXCEPTION => ['onKernelException', 2048]
 		];
 	}
 	
-	/**
-	 * @param Request $request
-	 * @param array $origins
-	 * @param string $pattern
-	 * @return boolean
-	 */
-	private function match(Request $request, $origins, $pattern)
+	private function match(Request $request, array $origins, string $pattern = null): bool
 	{
 		if (false === empty($origins) && false === in_array($request->headers->get('Origin'), $origins)) {
 			return false;
 		}
 		
-		if (true === isset($pattern) && !preg_match(sprintf('#%s#', strtr($pattern, '#', '\#')), $request->getPathInfo())) {
+		if (true === isset($pattern) && false === (new RequestMatcher($pattern))->matches($request)) {
 			return false;
 		}
 		
 		return true;
 	}
 	
-	/**
-	 * @param Request $request
-	 * @param Response $response
-	 * @param array $map
-	 * @return Response
-	 */
-	private function apply(Request $request, Response $response, array $map = [])
+	private function apply(Request $request, Response $response, array $map = []): Response
 	{
 		// Define CORS allow_origin
 		$response->headers->set('Access-Control-Allow-Origin', false === empty($map[CorsOptions::ORIGINS]) ? $request->headers->get('Origin') : '*');
